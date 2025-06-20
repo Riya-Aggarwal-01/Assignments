@@ -1,4 +1,3 @@
-from time import perf_counter
 
 student_name=input("Enter your name")
 student_class=input("Enter your class")
