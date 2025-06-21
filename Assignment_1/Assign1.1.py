@@ -17,11 +17,3 @@ print(f"Student Name : {student_name}")
 print(f"Student Class : {student_class}")
 print(f"Total Marks : {total_marks}/500")
 print(f"Percentage : {percentage:.2f}%")
-if (percentage>70) and (percentage<=100):
-    print("Grade : A")
-elif (percentage>40) and (percentage<=70):
-    print("Grade : B")
-elif (percentage>30) and (percentage<=40):
-    print("Grade : C")
-else:
-    print("Grade : Fail")
