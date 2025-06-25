@@ -47,9 +47,6 @@ print(df)
 
 row = pd.DataFrame([[10,11,12]])
 
-df3 = pd.concat([df.iloc[:1],row,df.iloc[0:]],ignore_index=True)
-print(df3)
-
 df.loc[0.5] = [10, 11, 12]  # Use a fractional index to go between 0 and 1
 df = df.sort_index().reset_index(drop=True)
 print(df)
