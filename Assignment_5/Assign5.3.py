@@ -5,6 +5,9 @@ data = [[1,2,3],
         [4,5,6],
         [7,8,9]]
 df = pd.DataFrame(data)
+
+print(df.loc[0])
+
 for index, row in df.iterrows():
     print(f"Row {index}: {row[0]}, {row[1]}, {row[2]}")
 
@@ -39,7 +42,11 @@ df2 = df2.drop(df2[df2['B']>5].index)
 print(df2)
 
 #inserting rows
+df.iloc[1:3, 0] = [11, 13]
+print(df)
+
 row = pd.DataFrame([[10,11,12]])
+
 df3 = pd.concat([df.iloc[:1],row,df.iloc[0:]],ignore_index=True)
 print(df3)
 
