@@ -4,7 +4,7 @@ Query-1 : select s.customer_id, sum(m.price) as amount_sent
          group by customer_id;
 
 
-Quer-2 : select s.customer_id, count(distinct order_date) as total_days
+Query-2 : select s.customer_id, count(distinct order_date) as total_days
          from sales s
          group by s.customer_id;
 
@@ -61,7 +61,14 @@ Query 6 : select s.customer_id,s.product_id,s.order_date
           where s.customer_id=s2.customer_id and s2.order_Date>=m.join_date
           )
 
-Query 7 :
+Query 7 : select s.customer_id,s.product_id,s.order_date
+          from sales s 
+          join members m on m.customer_id=s.customer_id
+          where s.order_date = (
+          select max(s2.order_date)
+          from sales s2 
+          where s.customer_id=s2.customer_id and s2.order_Date<m.join_date
+          )
 
 Query 8 : select s.customer_id,
           count(*) as total_items,
