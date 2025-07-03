@@ -90,4 +90,17 @@ Query 9 : select s.customer_id,
          join menu m on s.product_id = m.product_id
          group by s.customer_id;
 
-Query 10 : 
+Query 10 : SELECT
+           s.customer_id,
+           SUM(
+              CASE
+                WHEN s.order_date BETWEEN m.join_date AND m.join_date + INTERVAL '6 days'
+                   THEN menu.price * 10 * 2
+                ELSE
+                   menu.price * 10
+                END) AS total_points
+           FROM sales s 
+           JOIN members m ON s.customer_id = m.customer_id
+           JOIN menu ON s.product_id = menu.product_id
+           WHERE s.order_date <= '2021-01-31'
+           GROUP BY s.customer_id
