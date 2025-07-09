@@ -1,0 +1,53 @@
+df = spark.table("assignment.metadata")
+df.display()
+
+# Identify types like 'Raw', 'Curated', 'Presentation'
+table_types = set()
+
+for col in df.columns:
+    if "TableName" in col:
+        prefix = col.replace("TableName", "").strip()
+        if prefix:
+            table_types.add(prefix)
+
+
+
+
+for table_type in table_types:
+    table_name_col = f"{table_type}TableName"
+    column_name_col = f"{table_type}TableColumn"
+    datatype_col = f"{table_type}TableColumnDatatype"
+
+    table_names = df.select(table_name_col).distinct().collect()
+
+    for row in table_names:
+        table_name = row[table_name_col]  
+
+        # Get all columns for this table
+        table_columns = (
+            df.filter(df[table_name_col] == table_name)
+              .select(column_name_col, datatype_col)
+              .distinct()
+              .collect()
+        )
+
+        # Build column definitions for SQL
+        column_def = ",\n  ".join([
+            f"`{col[column_name_col]}` {col[datatype_col]}"
+            for col in table_columns
+        ])
+
+        # Full table name with type prefix (e.g., Raw_User)
+        full_table_name = f"{table_type}_{table_name}"
+
+        # Drop table if exists
+        spark.sql(f"DROP TABLE IF EXISTS assignment.`{full_table_name}`")
+
+        # Create table
+        create_sql = f"""
+        CREATE TABLE assignment.`{full_table_name}` (
+          {column_def}
+        )
+        """
+        print(f"Creating table: assignment.{full_table_name}")
+        spark.sql(create_sql)

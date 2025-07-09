@@ -1,0 +1,3 @@
+﻿RawTableName,RawTableColumn,RawTableColumnDatatype,CuratedTableName,CuratedTableColumn,CuratedTableColumnDataType,PresentationTableName,PresentationTableColumn,PresentationTableColumnDatatype
+User,ID,Integer,Employee,EmpID,Integer,Emp,EmpID,Integer
+User,Name,String,Employee,EmpName,string,Emp,EmpName,String
